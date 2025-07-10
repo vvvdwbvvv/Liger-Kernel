@@ -48,9 +48,9 @@ def lce_forward(
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, AutoModelForCausalLM
+    >>> from transformers import AutoTokenizer, SmolLM3ForCausalLM
 
-    >>> model = AutoModelForCausalLM.from_pretrained("HuggingFaceTB/SmolLM3-3B")
+    >>> model = SmolLM3ForCausalLM.from_pretrained("HuggingFaceTB/SmolLM3-3B")
     >>> tokenizer = AutoTokenizer.from_pretrained("HuggingFaceTB/SmolLM3-3B")
 
     >>> prompt = "Give me a brief explanation of gravity in simple terms."
@@ -59,7 +59,7 @@ def lce_forward(
     >>> # Generate
     >>> generate_ids = model.generate(inputs.input_ids, max_length=30)
     >>> tokenizer.batch_decode(generate_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]
-    'Give me a brief explanation of gravity in simple terms. \n\nGravity is a force that pulls objects towards each other. Imagine you're holding a ball and'
+    'Give me a brief explanation of gravity in simple terms. What is it, and how does it work? Use no more than 100 words.\n\nGravity'
     ```
     """
     output_attentions = output_attentions if output_attentions is not None else self.config.output_attentions
