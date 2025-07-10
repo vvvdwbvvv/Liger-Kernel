@@ -49,17 +49,16 @@ def lce_forward(
 
     ```python
     >>> from transformers import AutoTokenizer, SmolLM3ForCausalLM
+    >>> model = SmolLM3ForCausalLM.from_pretrained("meta-smollm3/SmolLM3-2-7b-hf")
+    >>> tokenizer = AutoTokenizer.from_pretrained("meta-smollm3/SmolLM3-2-7b-hf")
 
-    >>> model = SmolLM3ForCausalLM.from_pretrained("HuggingFaceTB/SmolLM3-3B")
-    >>> tokenizer = AutoTokenizer.from_pretrained("HuggingFaceTB/SmolLM3-3B")
-
-    >>> prompt = "Give me a brief explanation of gravity in simple terms."
+    >>> prompt = "Hey, are you conscious? Can you talk to me?"
     >>> inputs = tokenizer(prompt, return_tensors="pt")
 
     >>> # Generate
     >>> generate_ids = model.generate(inputs.input_ids, max_length=30)
     >>> tokenizer.batch_decode(generate_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]
-    'Give me a brief explanation of gravity in simple terms. What is it, and how does it work? Use no more than 100 words.\n\nGravity'
+    "Hey, are you conscious? Can you talk to me?\nI'm not conscious, but I can talk to you."
     ```
     """
     output_attentions = output_attentions if output_attentions is not None else self.config.output_attentions
