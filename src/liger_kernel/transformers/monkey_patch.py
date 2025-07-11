@@ -1776,6 +1776,7 @@ def apply_liger_kernel_to_glm4(
                 _patch_rms_norm_module(decoder_layer.post_self_attn_layernorm, in_place=False)
                 _patch_rms_norm_module(decoder_layer.post_mlp_layernorm, in_place=False)
 
+
 def apply_liger_kernel_to_smollm3(
     rope: bool = False,
     cross_entropy: bool = False,
@@ -1819,7 +1820,7 @@ def apply_liger_kernel_to_smollm3(
         modeling_smollm3.CrossEntropyLoss = LigerCrossEntropyLoss
     if fused_linear_cross_entropy:
         modeling_smollm3.SmolLM3ForCausalLM.forward = smollm3_lce_forward
-            
+
     if model is not None:
         # The model instance already exists, so we need to additionally patch the
 
@@ -1831,7 +1832,7 @@ def apply_liger_kernel_to_smollm3(
 
         for layer in base_model.layers:
             if swiglu:
-                _patch_swiglu_module(layer.mlp, LigerSwiGLUMLP) 
+                _patch_swiglu_module(layer.mlp, LigerSwiGLUMLP)
             if rms_norm:
                 _patch_rms_norm_module(layer.input_layernorm, LigerRMSNorm)
                 _patch_rms_norm_module(layer.post_attention_layernorm, LigerRMSNorm)

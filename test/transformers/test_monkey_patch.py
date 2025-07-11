@@ -35,13 +35,13 @@ if transformer_version >= version.parse(SUPPORTED_TRANSFORMER_VERSION):
     from liger_kernel.transformers.model.gemma import lce_forward as gemma_lce_forward
     from liger_kernel.transformers.model.gemma2 import lce_forward as gemma2_lce_forward
     from liger_kernel.transformers.model.llama import lce_forward as llama_lce_forward
-    from liger_kernel.transformers.model.smollm3 import lce_forward as smolllm3_lce_forward
     from liger_kernel.transformers.model.mistral import lce_forward as mistral_lce_forward
     from liger_kernel.transformers.model.mixtral import lce_forward as mixtral_lce_forward
     from liger_kernel.transformers.model.mllama import lce_forward as mllama_lce_forward
     from liger_kernel.transformers.model.paligemma import lce_forward as paligemma_lce_forward
     from liger_kernel.transformers.model.phi3 import lce_forward as phi3_lce_forward
     from liger_kernel.transformers.model.qwen2 import lce_forward as qwen2_lce_forward
+    from liger_kernel.transformers.model.smollm3 import lce_forward as smolllm3_lce_forward
 else:
     from liger_kernel.transformers.model.gemma import lce_forward_deprecated as gemma_lce_forward
     from liger_kernel.transformers.model.gemma2 import lce_forward_deprecated as gemma2_lce_forward
@@ -83,6 +83,7 @@ def is_qwen3_available():
     except ImportError:
         return False
 
+
 def is_smollm3_available():
     try:
         import transformers.models.smollm3  # noqa: F401
@@ -90,7 +91,7 @@ def is_smollm3_available():
         return True
     except ImportError:
         return False
-    
+
 
 def is_olmo2_available():
     try:
@@ -140,13 +141,13 @@ def test_import_from_root():
         from liger_kernel.transformers import apply_liger_kernel_to_mistral  # noqa: F401
         from liger_kernel.transformers import apply_liger_kernel_to_mixtral  # noqa: F401
         from liger_kernel.transformers import apply_liger_kernel_to_mllama  # noqa: F401
-        from liger_kernel.transformers import apply_liger_kernel_to_smollm3  # noqa: F401
         from liger_kernel.transformers import apply_liger_kernel_to_phi3  # noqa: F401
         from liger_kernel.transformers import apply_liger_kernel_to_qwen2  # noqa: F401
         from liger_kernel.transformers import apply_liger_kernel_to_qwen2_5_vl  # noqa: F401
         from liger_kernel.transformers import apply_liger_kernel_to_qwen2_vl  # noqa: F401
         from liger_kernel.transformers import apply_liger_kernel_to_qwen3  # noqa: F401
         from liger_kernel.transformers import apply_liger_kernel_to_qwen3_moe  # noqa: F401
+        from liger_kernel.transformers import apply_liger_kernel_to_smollm3  # noqa: F401
     except Exception:
         pytest.fail("Import kernel patch from root fails")
 
@@ -1632,8 +1633,8 @@ def test_apply_liger_kernel_to_instance_for_glm4():
         except Exception as e:
             pytest.fail(f"An exception occured in extra_expr: {type(e).__name__} - {e}")
 
+
 def test_apply_liger_kernel_to_instance_for_smollm3():
-    from liger_kernel.transformers.rope import liger_rotary_pos_emb
     # Ensure any monkey patching is cleaned up for subsequent tests
     with patch("transformers.models.smollm3.modeling_smollm3"):
         # Instantiate a dummy model
